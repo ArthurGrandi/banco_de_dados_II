@@ -30,8 +30,8 @@ CREATE TABLE funcionarios (
 CREATE TABLE pedidos (
     idPedido INTEGER PRIMARY KEY NOT NULL,
     Data DATE NOT NULL,
-    idCliente INTEGER NOT NULL,
-    Status VARCHAR(15) NOT NULL,
+	Status VARCHAR(15) NOT NULL,
+	idCliente INTEGER NOT NULL,
     idFuncionario INTEGER NOT NULL,
     FOREIGN KEY (idFuncionario) REFERENCES funcionarios (idFuncionario) ON DELETE CASCADE,
     FOREIGN KEY (idCliente) REFERENCES clientes (idCliente) ON DELETE CASCADE
@@ -67,7 +67,7 @@ CREATE TABLE transportadoras (
 CREATE TABLE itens_pedidos (
 	idItemPedido INTEGER PRIMARY KEY NOT NULL,
     tamanho VARCHAR(15) NOT NULL,
-    quantidade DECIMAL(15) NOT NULL,
+    quantidade DECIMAL(4) NOT NULL,
     idPedido INTEGER NOT NULL,
     idProduto INTEGER NOT NULL,
     FOREIGN KEY (idPedido) REFERENCES pedidos (idPedido) ON DELETE CASCADE,

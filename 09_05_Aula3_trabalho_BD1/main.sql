@@ -4,7 +4,7 @@ CREATE DOMAIN dLougradouro as VARCHAR(50) NOT NULL;
 CREATE DOMAIN dNumero as VARCHAR(5) NOT NULL;
 CREATE DOMAIN dCidade as VARCHAR(50) NOT NULL;
 CREATE DOMAIN dBairro as VARCHAR(50) NOT NULL;
-CREATE DOMAIN dComplemento as VARCHAR(30);
+CREATE DOMAIN dComplemento as VARCHAR(50);
 CREATE DOMAIN dEstado as CHAR(2) NOT NULL;
 
 
@@ -30,11 +30,11 @@ CREATE TABLE funcionarios (
 CREATE TABLE pedidos (
     idPedido INTEGER PRIMARY KEY NOT NULL,
     Data DATE NOT NULL,
-    idCliente INTEGER NOT NULL,
-    Status VARCHAR(15) NOT NULL,
+	Status VARCHAR(15) NOT NULL,
+	idCliente INTEGER NOT NULL,
     idFuncionario INTEGER NOT NULL,
-    FOREIGN KEY (IdFuncionario) REFERENCES FUNCIONÁRIOS(IdFuncionario) ON DELETE CASCADE,
-    FOREIGN KEY (IdCliente) REFERENCES CLIENTES(IdCliente) ON DELETE CASCADE
+    FOREIGN KEY (idFuncionario) REFERENCES funcionarios (idFuncionario) ON DELETE CASCADE,
+    FOREIGN KEY (idCliente) REFERENCES clientes (idCliente) ON DELETE CASCADE
 );
 
 CREATE TABLE fornecedores (
@@ -65,27 +65,27 @@ CREATE TABLE transportadoras (
 );
 
 CREATE TABLE itens_pedidos (
+	idItemPedido INTEGER PRIMARY KEY NOT NULL,
     tamanho VARCHAR(15) NOT NULL,
-    quantidade VARCHAR(4) NOT NULL,
-    idItemPedido INTEGER PRIMARY KEY NOT NULL,
+    quantidade DECIMAL(4) NOT NULL,
     idPedido INTEGER NOT NULL,
     idProduto INTEGER NOT NULL,
-    FOREIGN KEY (IdPedido) REFERENCES PEDIDOS(IdPedido) ON DELETE CASCADE,
-    FOREIGN KEY (IdProduto) REFERENCES PRODUTOS(IdProduto) ON DELETE CASCADE
+    FOREIGN KEY (idPedido) REFERENCES pedidos (idPedido) ON DELETE CASCADE,
+    FOREIGN KEY (idProduto) REFERENCES produtos (idProduto) ON DELETE CASCADE
 );
 
 CREATE TABLE fornecem (
     idFornecedor INTEGER NOT NULL,
     idProduto INTEGER NOT NULL,
-    PRIMARY KEY (IdFornecedor, IdProduto),
-    FOREIGN KEY (IdFornecedor) REFERENCES FORNECEDORES(IdFornecedor) ON DELETE CASCADE,
-    FOREIGN KEY (IdProduto) REFERENCES PRODUTOS(IdProduto) ON DELETE CASCADE
+    PRIMARY KEY (idFornecedor, idProduto),
+    FOREIGN KEY (idFornecedor) REFERENCES fornecedores (idFornecedor) ON DELETE CASCADE,
+    FOREIGN KEY (idProduto) REFERENCES produtos (idProduto) ON DELETE CASCADE
 );
 
 CREATE TABLE entregam (
     idPedido INTEGER NOT NULL,
     idTransportadoras INTEGER NOT NULL,
-    PRIMARY KEY (IdPedido, IdTransportadoras),
-    FOREIGN KEY (IdPedido) REFERENCES PEDIDOS(IdPedido) ON DELETE CASCADE,
-    FOREIGN KEY (IdTransportadoras) REFERENCES TRANSPORTADORAS(IdTransportadoras) ON DELETE CASCADE
+    PRIMARY KEY (idPedido, IdTransportadoras),
+    FOREIGN KEY (idPedido) REFERENCES pedidos (idPedido) ON DELETE CASCADE,
+    FOREIGN KEY (idTransportadoras) REFERENCES transportadoras (idTransportadoras) ON DELETE CASCADE
 );
